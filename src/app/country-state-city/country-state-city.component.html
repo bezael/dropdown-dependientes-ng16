@@ -1,0 +1,44 @@
+<mat-card>
+<mat-card-header>
+  <mat-card-title>Countries, States and Cites</mat-card-title>
+</mat-card-header>
+<mat-card-content>
+<div class="container">
+<div class="grid-item">
+  <mat-form-field>
+    <mat-label>Country</mat-label>
+    <mat-select name="country" [formControl]="countryControl">
+      <mat-option [value]="null">None</mat-option>
+      <mat-option *ngFor="let country of countries$ | async" [value]="country">{{country.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div class="grid-item">
+  <mat-form-field>
+    <mat-label>State</mat-label>
+    <mat-select name="state" [formControl]="stateControl">
+      <mat-option [value]="null">None</mat-option>
+      <mat-option *ngFor="let state of states$ | async" [value]="state">{{state.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div class="grid-item">
+  <mat-form-field>
+    <mat-label>City</mat-label>
+    <mat-select name="city" [formControl]="cityControl">
+      <mat-option [value]="null">None</mat-option>
+      <mat-option *ngFor="let city of cities$ | async" [value]="city">{{city}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+
+
+</div>
+
+
+
+</mat-card-content>
+
+
+</mat-card>
