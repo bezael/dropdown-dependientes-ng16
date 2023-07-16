@@ -1,6 +1,7 @@
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Component, inject } from '@angular/core';
 import { Country, CountryAndState, DataService, State, StateCity } from './data.service';
-import { AsyncPipe, JsonPipe, NgFor } from '@angular/common';
+import { NgFor } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { MatSelectModule } from '@angular/material/select';
@@ -14,8 +15,6 @@ import { filter, of, switchMap, tap } from 'rxjs';
   styleUrls: ['./country-state-city.component.css'],
   standalone: true,
   imports: [
-    AsyncPipe,
-    JsonPipe,
     NgFor,
     MatSelectModule,
     MatCardModule,
@@ -30,9 +29,9 @@ export class CountryStateCityComponent {
 
   private dataSvc = inject(DataService);
 
-  countries$ = this.dataSvc.getCountries();
+  countries$ = toSignal(this.dataSvc.getCountries());
 
-  states$ = this.countryControl.valueChanges
+  states$ = toSignal(this.countryControl.valueChanges
     .pipe(
       filter((value): value is Country => value !== null),
       switchMap((country: Country) => {
@@ -50,11 +49,11 @@ export class CountryStateCityComponent {
             )
         }
 
-      })
+      }))
   )
 
 
-  cities$ = this.stateControl.valueChanges
+  cities$ = toSignal(this.stateControl.valueChanges
     .pipe(
       filter((value): value is State => value !== null),
       switchMap((state:State) => {
@@ -75,6 +74,6 @@ export class CountryStateCityComponent {
           );
         }
 
-      })
+      }))
     )
 }
